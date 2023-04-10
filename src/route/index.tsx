@@ -1,15 +1,16 @@
 import React from 'react'
+import { Text, TouchableOpacity } from 'react-native'
 
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import type { StackNavigationProp } from '@react-navigation/stack';
 
-import { Main, Detail } from '../screens'
+import { Main, Detail, Search } from '../screens'
 
 type StackNavigatorParamList = {
     MainScreen: undefined;
     DetailScreen: { id: string };
-    
+    SearchScreen: undefined;
 };
 
 export type ScreenNavigationProp = StackNavigationProp< StackNavigatorParamList,
@@ -35,7 +36,20 @@ const Navigator = () => {
         <Stack.Navigator screenOptions={{
             headerBackTitle: ' ',
         }}>
-            <Stack.Screen name='MainScreen' component={Main} options={{ title: 'Photos' }} />
+            <Stack.Screen 
+                name='MainScreen' 
+                component={Main} 
+                options={({ navigation, route }) => ({
+                    title: 'Photos',
+                    headerRight: () => (
+                        <TouchableOpacity style={{
+                            marginRight: 16,
+                        }} onPress={()=>console.log(navigation.navigate('SearchScreen'))}>
+                            <Text>Search</Text>
+                        </TouchableOpacity>
+                    ),
+                  })}
+            />
             <Stack.Screen 
                 name='DetailScreen' 
                 component={Detail} 
@@ -47,6 +61,7 @@ const Navigator = () => {
                     },
                 }}  
             />
+            <Stack.Screen name='SearchScreen' component={Search} options={{ title: 'Search' }} />
         </Stack.Navigator>
     </NavigationContainer>
 }

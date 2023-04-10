@@ -12,3 +12,8 @@ export const getPhotoByIdAPI = (id: string) => {
     const url = `https://api.unsplash.com/photos/${id}/?client_id=${ACCESS_KEY}`
     return axios.get(url)
 }
+
+export const searchPhotosAPI = (query: string) => {
+    const url = `https://api.unsplash.com/search/photos/?client_id=${ACCESS_KEY}&query=${query}&per_page=${36}`
+    return axios.get(url)
+}
